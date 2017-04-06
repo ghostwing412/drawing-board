@@ -1,0 +1,196 @@
+@charset "UTF-8";
+@ball-color: #999;
+@red-bg-color: #ffe0b0;
+@blue-bg-color: #adf1ff;
+@other-color: #6c6c6c;
+@other-bg-color: #f3f2f2;
+@table-border: 1px solid #d8d8d8;
+@table-bg-color: #fbfbfb;
+@table-font-color: #333;
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+  padding: 0;
+  margin: 0
+}
+
+body, button, input, textarea {
+  font: 12px/1.5 Tahoma, Helvetica, Arial, '\5b8b\4f53', sans-serif
+}
+
+ol, ul {
+  list-style: none
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%
+}
+
+fieldset, img {
+  border: 0;
+  vertical-align: top
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+address, caption, cite, code, dfn, em, th, var {
+  font-weight: normal;
+  font-style: normal
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #146ac9;
+  outline: 0
+}
+
+a:hover {
+  text-decoration: none;
+  color: #d90000
+}
+
+a.black {
+  color: #000
+}
+
+body {
+  color: #333
+}
+
+input, textarea, select {
+  color: #333;
+  vertical-align: middle
+}
+
+table {
+  width: 100%;
+}
+
+.chart-table-cont {
+  width: 980px;
+  margin: 0 auto;
+}
+
+.ball_s3, .ball_s10, .ball_s11 {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  color: #fff;
+  background: url(http://p4.qhimg.com/t01e6e5a194c150bfba.png) no-repeat;
+  position: relative;
+  left: 3px;
+  vertical-align: middle;
+  font-size: 11px;
+}
+
+.ball_s3 {
+  background-position: -3px -528px;
+}
+
+.ball_s11 {
+  background-position: -3px -730px;
+}
+
+.ball_s10 {
+  background-position: -3px -673px;
+}
+
+.chart-table {
+  th {
+    border: @table-border;
+    background: @table-bg-color;
+    height: 30px;
+    color: @table-font-color;
+  }
+  td {
+    width: 16px;
+    //height:16px;
+    border: @table-border;
+    padding: 0;
+  }
+  .tdbdr {
+    width: 0;
+    overflow: hidden;
+    font-size: 0;
+  }
+  .noth {
+    color: #000;
+    font-weight: normal;
+  }
+  .tdbg_1 {
+    color: @other-color;
+    background: @other-bg-color;
+  }
+  .tdbg_3 {
+    color: @ball-color;
+    background: @blue-bg-color;
+  }
+  .tdbg_5 {
+    color: @ball-color;
+    background: @red-bg-color;
+  }
+  .tdbck {
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+    border-color: #bebebe
+  }
+  .tdbg_x {
+    background: #476c16;
+  }
+  .tdbg_lh {
+    background: #bc5fd0;
+  }
+  .tdbg_r {
+    background: #6c1014;
+  }
+  .td_index {
+    color: #333;
+    background-color: green;
+  }
+
+  .td_index2 {
+    color: #333;
+    background-color: yellow;
+  }
+
+  .td_index3 {
+    color: yellow;
+    background-color: blue;
+  }
+}
+
+.nonum {
+  width: 980px;
+  &.chart-table {
+    .tdbg_3 {
+      color: @blue-bg-color;
+    }
+    .tdbg_5 {
+      color: @red-bg-color;
+    }
+  }
+}
+
+.chart-tab {
+  clear: both;
+  position: relative;
+}
+
+.thide {
+  display: none;
+}
+
+.zzhfb {
+  td {
+    height: 16px;
+  }
+}
+.draw-content{
+  position: absolute;
+  top:0;
+}

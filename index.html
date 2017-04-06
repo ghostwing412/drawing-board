@@ -1,0 +1,2512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="js/table_config.js"></script>
+    <script type="text/javascript" src="js/my-dom-ctl.js"></script>
+    <script type="text/javascript" src="js/table.js"></script>
+    <script type="text/javascript" src="js/ghw-canvas.js"></script>
+    <!--<script type="text/javascript" src="js/table_base.js"></script>-->
+    <link rel="stylesheet/less" type="text/css" href="main.less">
+    <script src="js/less.min.js" type="text/javascript"></script>
+    <style type="text/css" rel="stylesheet">
+
+    </style>
+</head>
+<body>
+<div class="selector">
+    <label>
+        <input type="checkbox" data-chart="yl" checked name="chart_args[]" value="fc"/>遗漏数据
+    </label>
+    <label>
+        <input type="checkbox" data-chart="fc" checked name="chart_args[]" value="fc"/>遗漏分层
+    </label>
+    <label>
+        <input type="checkbox" checked data-chart_options='{elm:' data-tab',mark:'hit',rang:{col: 10,row: 0,cols: 34,"rows": 35},"cls":"tdbg_r"}' data-chart="ch" name="chart_args[]" value="3"/>重号
+    </label>
+    <label>
+        <input type="checkbox" checked data-chart="lh" name="chart_args[]" value="3"/>连号
+    </label>
+    <label>
+        <input type="checkbox" checked data-chart="nh" name="chart_args[]" value="3"/>邻号
+    </label>
+    <label>
+        <input type="checkbox" checked data-chart="nl" name="chart_args[]" value="4"/>折线
+    </label>
+    <input type="button" class="drawing-open" value="打开"/>
+    <input type="button" class="drawing-close" value="关闭"/>
+    <input type="button" class="drawing-btn" data-drawing_type="curve" id="curve" value="椭圆"/>
+    <input type="button" class="drawing-btn" data-drawing_type="square" value="矩形"/>
+    <input type="button" class="drawing-btn" data-drawing_type="line" value="直线"/>
+    <input type="button" class="drawing-btn" data-drawing_type="pointToLine" value="点线"/>
+    <input type="button" class="drawing-btn" data-drawing_type="eraser" value="橡皮擦"/>
+</div>
+<div class="chart-tab chart-table-cont">
+    <table class='nonum chart-table' id="chart-table">
+        <thead class='zhfb'>
+        <tr>
+            <th rowspan='2' class='w94'>期号&nbsp; <a href='#' class='tharr tharr-up'></a></th>
+            <td rowspan='2' class='tdbdr '></td>
+            <th rowspan='2' class='thide'>奖号</th>
+            <td rowspan='2' class='tdbdr thide'></td>
+            <th colspan='34' class='noth '>红球号码分布</th>
+            <td class='tdbdr '></td>
+            <th colspan='16' class='noth '>蓝球号码分布</th>
+        </tr>
+        <tr>
+            <td class=' w1_9'>01</td>
+            <td class=' w1_9'>02</td>
+            <td class=' w1_9'>03</td>
+            <td class=' w1_9'>04</td>
+            <td class=' w1_9'>05</td>
+            <td class=' w1_9'>06</td>
+            <td class=' w1_9'>07</td>
+            <td class=' w1_9'>08</td>
+            <td class=' w1_9'>09</td>
+            <td class=' w1_9'>10</td>
+            <td class=' w1_9'>11</td>
+            <td class=' w1_9'>12</td>
+            <td class=' w1_9'>13</td>
+            <td class=' w1_9'>14</td>
+            <td class=' w1_9'>15</td>
+            <td class=' w1_9'>16</td>
+            <td class='tdbdr  tdbdr_nav'></td>
+            <td class=' w1_9'>17</td>
+            <td class=' w1_9'>18</td>
+            <td class=' w1_9'>19</td>
+            <td class=' w1_9'>20</td>
+            <td class=' w1_9'>21</td>
+            <td class=' w1_9'>22</td>
+            <td class=' w1_9'>23</td>
+            <td class=' w1_9'>24</td>
+            <td class=' w1_9'>25</td>
+            <td class=' w1_9'>26</td>
+            <td class=' w1_9'>27</td>
+            <td class=' w1_9'>28</td>
+            <td class=' w1_9'>29</td>
+            <td class=' w1_9'>30</td>
+            <td class=' w1_9'>31</td>
+            <td class=' w1_9'>32</td>
+            <td class=' w1_9'>33</td>
+            <td class='tdbdr '></td>
+            <td class=' w1_9'>01</td>
+            <td class=' w1_9'>02</td>
+            <td class=' w1_9'>03</td>
+            <td class=' w1_9'>04</td>
+            <td class=' w1_9'>05</td>
+            <td class=' w1_9'>06</td>
+            <td class=' w1_9'>07</td>
+            <td class=' w1_9'>08</td>
+            <td class=' w1_9'>09</td>
+            <td class=' w1_9'>10</td>
+            <td class=' w1_9'>11</td>
+            <td class=' w1_9'>12</td>
+            <td class=' w1_9'>13</td>
+            <td class=' w1_9'>14</td>
+            <td class=' w1_9'>15</td>
+            <td class=' w1_9'>16</td>
+        </tr>
+        </thead>
+        <tbody id='data-tab' class='zzhfb'>
+        <tr>
+            <td class='tdbg_1 '>2016-151</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>06 11 16 20 22 33</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>06</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>11</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>20</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>22</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>20</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>32</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>29</td>
+            <td class='tdbg_3'>30</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>48</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>24</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2016-152</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 08 09 16 20 22</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>09</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>20</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>22</td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>33</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>30</td>
+            <td class='tdbg_3'>31</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>49</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>25</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2016-153</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>07 09 16 24 25 29</strong>+<strong class='bluenum'>06</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>07</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>09</span></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>24</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>25</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>23</td>
+            <td class='tdbg_3'>22</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>34</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>06</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>31</td>
+            <td class='tdbg_3'>32</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>50</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>26</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-001</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>09 11 14 20 25 26</strong>+<strong class='bluenum'>15</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>09</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>11</span></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>14</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>20</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>25</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>24</td>
+            <td class='tdbg_3'>23</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>35</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>32</td>
+            <td class='tdbg_3'>33</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>51</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>15</span></td>
+            <td class='tdbg_3'>27</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-002</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>15 19 23 24 25 32</strong>+<strong class='bluenum'>03</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>15</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>19</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>23</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>24</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>25</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>25</td>
+            <td class='tdbg_3'>24</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>03</span></td>
+            <td class='tdbg_3'>36</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>33</td>
+            <td class='tdbg_3'>34</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>52</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>28</td>
+        </tr>
+        <tr>
+            <td colspan='99' class='tdbck'></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-003</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>01 04 08 15 27 32</strong>+<strong class='bluenum'>16</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>01</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>04</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>15</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>27</span></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>26</td>
+            <td class='tdbg_3'>25</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>37</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>34</td>
+            <td class='tdbg_3'>35</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>53</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>16</span></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-004</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>05 13 17 26 27 30</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>05</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>13</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>17</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>27</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>30</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>27</td>
+            <td class='tdbg_3'>26</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>38</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>35</td>
+            <td class='tdbg_3'>36</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>54</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>1</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-005</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>06 11 12 22 23 30</strong>+<strong class='bluenum'>05</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>06</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>11</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>12</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>23</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>30</span></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>28</td>
+            <td class='tdbg_3'>27</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>39</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>05</span></td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>36</td>
+            <td class='tdbg_3'>37</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>55</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>2</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-006</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 04 08 26 29 33</strong>+<strong class='bluenum'>08</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>04</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>29</td>
+            <td class='tdbg_3'>28</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>40</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>08</span></td>
+            <td class='tdbg_3'>38</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>56</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>16</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>3</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-007</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 04 05 24 26 33</strong>+<strong class='bluenum'>15</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>04</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>05</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>24</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>30</td>
+            <td class='tdbg_3'>29</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>41</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>39</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>57</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>17</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>15</span></td>
+            <td class='tdbg_3'>4</td>
+        </tr>
+        <tr>
+            <td colspan='99' class='tdbck'></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-008</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>07 13 15 27 28 29</strong>+<strong class='bluenum'>13</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>07</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>13</span></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>15</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>27</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>28</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>29</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>31</td>
+            <td class='tdbg_3'>30</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>42</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>40</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>58</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>13</span></td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>5</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-009</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 06 08 09 15 29</strong>+<strong class='bluenum'>14</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>06</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>09</span></td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>15</span></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>29</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>32</td>
+            <td class='tdbg_3'>31</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>43</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>41</td>
+            <td class='tdbg_3'>16</td>
+            <td class='tdbg_3'>59</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>14</span></td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>6</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-010</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>05 08 19 25 28 30</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>05</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>19</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>19</span></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>25</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>28</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>30</span></td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>33</td>
+            <td class='tdbg_3'>32</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>44</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>42</td>
+            <td class='tdbg_3'>17</td>
+            <td class='tdbg_3'>60</td>
+            <td class='tdbg_3'>16</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>7</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-011</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>10 11 12 23 26 29</strong>+<strong class='bluenum'>16</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>10</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>11</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>12</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>23</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>34</td>
+            <td class='tdbg_3'>33</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>45</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>43</td>
+            <td class='tdbg_3'>18</td>
+            <td class='tdbg_3'>61</td>
+            <td class='tdbg_3'>17</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>16</span></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-012</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>10 11 14 15 16 24</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>10</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>11</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>14</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>15</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>24</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>35</td>
+            <td class='tdbg_3'>34</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>46</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>44</td>
+            <td class='tdbg_3'>19</td>
+            <td class='tdbg_3'>62</td>
+            <td class='tdbg_3'>18</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>1</td>
+        </tr>
+        <tr>
+            <td colspan='99' class='tdbck'></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-013</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>08 11 28 29 31 33</strong>+<strong class='bluenum'>06</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>08</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>11</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>19</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>28</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>31</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>36</td>
+            <td class='tdbg_3'>35</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>47</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>06</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>45</td>
+            <td class='tdbg_3'>20</td>
+            <td class='tdbg_3'>63</td>
+            <td class='tdbg_3'>19</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>2</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-014</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>06 08 18 20 23 31</strong>+<strong class='bluenum'>13</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>06</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>08</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>18</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>20</span></td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>23</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>31</span></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>37</td>
+            <td class='tdbg_3'>36</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>48</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>46</td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>64</td>
+            <td class='tdbg_3'>20</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>13</span></td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>3</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-015</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>01 08 09 14 17 32</strong>+<strong class='bluenum'>01</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>01</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>19</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>08</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>09</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>14</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>17</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3' hit><span class='ball_s10'>01</span></td>
+            <td class='tdbg_3'>37</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>49</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>47</td>
+            <td class='tdbg_3'>22</td>
+            <td class='tdbg_3'>65</td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>4</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-016</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>05 08 16 22 27 29</strong>+<strong class='bluenum'>02</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>20</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>05</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>08</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>19</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>27</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>02</span></td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>50</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>48</td>
+            <td class='tdbg_3'>23</td>
+            <td class='tdbg_3'>66</td>
+            <td class='tdbg_3'>22</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>5</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-017</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>03 07 08 10 22 23</strong>+<strong class='bluenum'>12</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>03</span></td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>07</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>08</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>10</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>20</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>23</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>51</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>49</td>
+            <td class='tdbg_3'>24</td>
+            <td class='tdbg_3'>67</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>12</span></td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>6</td>
+        </tr>
+        <tr>
+            <td colspan='99' class='tdbck'></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-018</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>01 02 03 17 25 31</strong>+<strong class='bluenum'>09</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>01</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>02</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>03</span></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>17</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>21</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>25</span></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>31</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>16</td>
+            <td class='tdbg_3'>52</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>09</span></td>
+            <td class='tdbg_3'>25</td>
+            <td class='tdbg_3'>68</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>7</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-019</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>04 06 08 12 23 25</strong>+<strong class='bluenum'>08</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>04</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>06</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>12</span></td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>22</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>23</span></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>25</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>17</td>
+            <td class='tdbg_3'>53</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>08</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>26</td>
+            <td class='tdbg_3'>69</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>8</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-020</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>04 08 10 12 31 33</strong>+<strong class='bluenum'>10</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>04</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>08</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>10</span></td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>12</span></td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>23</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>31</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>18</td>
+            <td class='tdbg_3'>54</td>
+            <td class='tdbg_3'>15</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>10</span></td>
+            <td class='tdbg_3'>70</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>9</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-021</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 05 10 22 32 33</strong>+<strong class='bluenum'>09</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>05</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>10</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>24</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>19</td>
+            <td class='tdbg_3'>55</td>
+            <td class='tdbg_3'>16</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>09</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>71</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>10</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-022</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 06 15 16 18 32</strong>+<strong class='bluenum'>15</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>06</span></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>15</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>18</span></td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>25</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>20</td>
+            <td class='tdbg_3'>56</td>
+            <td class='tdbg_3'>17</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>72</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>15</span></td>
+            <td class='tdbg_3'>11</td>
+        </tr>
+        <tr>
+            <td colspan='99' class='tdbck'></td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-023</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>01 03 04 11 18 22</strong>+<strong class='bluenum'>14</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>01</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>03</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>04</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>11</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>18</span></td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>26</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>57</td>
+            <td class='tdbg_3'>18</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>73</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>14</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>12</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-024</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>09 21 25 26 29 31</strong>+<strong class='bluenum'>13</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>09</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>16</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>21</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>25</span></td>
+            <td class='tdbg_5' hit><span class='ball_s3'>26</span></td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>29</span></td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>31</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>22</td>
+            <td class='tdbg_3'>58</td>
+            <td class='tdbg_3'>19</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>74</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>13</span></td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>13</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-025</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 15 16 17 22 32</strong>+<strong class='bluenum'>07</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>02</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>17</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>15</span></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>16</span></td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5' hit><span class='ball_s11'>17</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>22</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>32</span></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>23</td>
+            <td class='tdbg_3'>59</td>
+            <td class='tdbg_3'>20</td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>07</span></td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>75</td>
+            <td class='tdbg_3'>8</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>14</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-026</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>03 10 12 19 27 30</strong>+<strong class='bluenum'>08</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>03</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>9</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>10</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>12</span></td>
+            <td class='tdbg_5'>18</td>
+            <td class='tdbg_5'>11</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>19</span></td>
+            <td class='tdbg_5'>12</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>27</span></td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>30</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>24</td>
+            <td class='tdbg_3'>60</td>
+            <td class='tdbg_3'>21</td>
+            <td class='tdbg_3'>13</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>08</span></td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>76</td>
+            <td class='tdbg_3'>9</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>15</td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 '>2017-027</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 thide'>
+                <!--<strong class='rednum'>02 04 11 14 27 30</strong>+<strong class='bluenum'>05</strong>-->
+            </td>
+            <td class='tdbdr thide'></td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>02</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s11'>04</span></td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbg_5'>5</td>
+            <td class='tdbg_5'>10</td>
+            <td class='tdbg_5'>7</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>11</span></td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>19</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>14</span></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbdr tdbdr_nav'></td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>4</td>
+            <td class='tdbg_5'>1</td>
+            <td class='tdbg_5'>13</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>8</td>
+            <td class='tdbg_5'>15</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>27</span></td>
+            <td class='tdbg_5'>14</td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5' hit><span class='ball_s3'>30</span></td>
+            <td class='tdbg_5'>3</td>
+            <td class='tdbg_5'>2</td>
+            <td class='tdbg_5'>6</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_3'>12</td>
+            <td class='tdbg_3'>11</td>
+            <td class='tdbg_3'>25</td>
+            <td class='tdbg_3'>61</td>
+            <td class='tdbg_3' hit><span class='ball_s10'>05</span></td>
+            <td class='tdbg_3'>14</td>
+            <td class='tdbg_3'>2</td>
+            <td class='tdbg_3'>1</td>
+            <td class='tdbg_3'>6</td>
+            <td class='tdbg_3'>7</td>
+            <td class='tdbg_3'>77</td>
+            <td class='tdbg_3'>10</td>
+            <td class='tdbg_3'>3</td>
+            <td class='tdbg_3'>4</td>
+            <td class='tdbg_3'>5</td>
+            <td class='tdbg_3'>16</td>
+        </tr>
+        </tbody>
+        <tfoot id='addedrow'>
+        <tr class='addCodeNum'>
+            <td class='tdbg_1'><span class='btn-prese'><a href='#' class='add'></a> <a href='#' class='cut'></a> </span>预选1</td>
+            <td class='tdbdr'></td>
+            <td class=''><span class='ball_x1'>01</span></td>
+            <td class=''><span class='ball_x1'>02</span></td>
+            <td class=''><span class='ball_x1'>03</span></td>
+            <td class=''><span class='ball_x1'>04</span></td>
+            <td class=''><span class='ball_x1'>05</span></td>
+            <td class=''><span class='ball_x1'>06</span></td>
+            <td class=''><span class='ball_x1'>07</span></td>
+            <td class=''><span class='ball_x1'>08</span></td>
+            <td class=''><span class='ball_x1'>09</span></td>
+            <td class=''><span class='ball_x1'>10</span></td>
+            <td class=''><span class='ball_x1'>11</span></td>
+            <td class=''><span class='ball_x1'>12</span></td>
+            <td class=''><span class='ball_x1'>13</span></td>
+            <td class=''><span class='ball_x1'>14</span></td>
+            <td class=''><span class='ball_x1'>15</span></td>
+            <td class=''><span class='ball_x1'>16</span></td>
+            <td class='tdbdr_nav'></td>
+            <td class=''><span class='ball_x1'>17</span></td>
+            <td class=''><span class='ball_x1'>18</span></td>
+            <td class=''><span class='ball_x1'>19</span></td>
+            <td class=''><span class='ball_x1'>20</span></td>
+            <td class=''><span class='ball_x1'>21</span></td>
+            <td class=''><span class='ball_x1'>22</span></td>
+            <td class=''><span class='ball_x1'>23</span></td>
+            <td class=''><span class='ball_x1'>24</span></td>
+            <td class=''><span class='ball_x1'>25</span></td>
+            <td class=''><span class='ball_x1'>26</span></td>
+            <td class=''><span class='ball_x1'>27</span></td>
+            <td class=''><span class='ball_x1'>28</span></td>
+            <td class=''><span class='ball_x1'>29</span></td>
+            <td class=''><span class='ball_x1'>30</span></td>
+            <td class=''><span class='ball_x1'>31</span></td>
+            <td class=''><span class='ball_x1'>32</span></td>
+            <td class=''><span class='ball_x1'>33</span></td>
+            <td class='tdbdr'></td>
+            <td class=''><span class='ball_x4'>01</span></td>
+            <td class=''><span class='ball_x4'>02</span></td>
+            <td class=''><span class='ball_x4'>03</span></td>
+            <td class=''><span class='ball_x4'>04</span></td>
+            <td class=''><span class='ball_x4'>05</span></td>
+            <td class=''><span class='ball_x4'>06</span></td>
+            <td class=''><span class='ball_x4'>07</span></td>
+            <td class=''><span class='ball_x4'>08</span></td>
+            <td class=''><span class='ball_x4'>09</span></td>
+            <td class=''><span class='ball_x4'>10</span></td>
+            <td class=''><span class='ball_x4'>11</span></td>
+            <td class=''><span class='ball_x4'>12</span></td>
+            <td class=''><span class='ball_x4'>13</span></td>
+            <td class=''><span class='ball_x4'>14</span></td>
+            <td class=''><span class='ball_x4'>15</span></td>
+            <td class=''><span class='ball_x4'>16</span></td>
+        </tr>
+        <tr class='addMoney'>
+            <td colspan='60'>
+                <div class='yun-txt'>
+                <span>将号码添至投注区
+                <a href='#' class='btn-up addCode'>添加</a></span>
+                    <em class='moneyTips'><b class='preTitle'>预选1：</b><strong class='red'>0</strong>注,<strong class='red'>0</strong>元</em>
+                    <a href='#' class='clearLine'>清空</a></div>
+            </td>
+        </tr>
+        <tr>
+            <td class='tdbg_1 lastIssue'>2017028</td>
+            <td class='tdbdr'></td>
+            <td class='tdbg_1 lastTxt' colspan='5'>等待开奖</td>
+            <td class='tdbg_1' colspan='60'>
+                <div class='remind'><span class='td-time' endtime='1489319700' now='1489069908' gfendtime='1489320000' issale='0' pttime='300'><span class='saleTxt'></span><span class='tipTxt'></span><em
+                        class='auto-edit'></em></span></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='99'
+            <div class='statis'><h2>图表指标统计</h2><span> <label><input type='radio' name='statistic'/> 历史统计<cite class='gray'>  </cite></label><label><input type='radio' name='statistic'
+                                                                                                                                                          checked='checked'/> 当前页统计 </label></span>
+            </div>
+            </td></tr>
+        <tr>
+            <th rowspan='2' class='w94'>期号&nbsp; <a href='#' class=' -up'></a></th>
+            <td rowspan='2' class='tdbdr '></td>
+            <th rowspan='2' class='thide'>奖号</th>
+            <td rowspan='2' class='tdbdr thide'></td>
+            <th colspan='34' class='noth '>红球号码分布</th>
+            <td class='tdbdr '></td>
+            <th colspan='16' class='noth '>蓝球号码分布</th>
+        </tr>
+        <tr>
+            <td class=' w1_9'>01</td>
+            <td class=' w1_9'>02</td>
+            <td class=' w1_9'>03</td>
+            <td class=' w1_9'>04</td>
+            <td class=' w1_9'>05</td>
+            <td class=' w1_9'>06</td>
+            <td class=' w1_9'>07</td>
+            <td class=' w1_9'>08</td>
+            <td class=' w1_9'>09</td>
+            <td class=' w1_9'>10</td>
+            <td class=' w1_9'>11</td>
+            <td class=' w1_9'>12</td>
+            <td class=' w1_9'>13</td>
+            <td class=' w1_9'>14</td>
+            <td class=' w1_9'>15</td>
+            <td class=' w1_9'>16</td>
+            <td class='tdbdr  tdbdr_nav'></td>
+            <td class=' w1_9'>17</td>
+            <td class=' w1_9'>18</td>
+            <td class=' w1_9'>19</td>
+            <td class=' w1_9'>20</td>
+            <td class=' w1_9'>21</td>
+            <td class=' w1_9'>22</td>
+            <td class=' w1_9'>23</td>
+            <td class=' w1_9'>24</td>
+            <td class=' w1_9'>25</td>
+            <td class=' w1_9'>26</td>
+            <td class=' w1_9'>27</td>
+            <td class=' w1_9'>28</td>
+            <td class=' w1_9'>29</td>
+            <td class=' w1_9'>30</td>
+            <td class=' w1_9'>31</td>
+            <td class=' w1_9'>32</td>
+            <td class=' w1_9'>33</td>
+            <td class='tdbdr '></td>
+            <td class=' w1_9'>01</td>
+            <td class=' w1_9'>02</td>
+            <td class=' w1_9'>03</td>
+            <td class=' w1_9'>04</td>
+            <td class=' w1_9'>05</td>
+            <td class=' w1_9'>06</td>
+            <td class=' w1_9'>07</td>
+            <td class=' w1_9'>08</td>
+            <td class=' w1_9'>09</td>
+            <td class=' w1_9'>10</td>
+            <td class=' w1_9'>11</td>
+            <td class=' w1_9'>12</td>
+            <td class=' w1_9'>13</td>
+            <td class=' w1_9'>14</td>
+            <td class=' w1_9'>15</td>
+            <td class=' w1_9'>16</td>
+        </tr>
+        <tr class='curstat '>
+            <td>出现总次数</td>
+            <td class='tdbdr'></td>
+            <td class=''>4</td>
+            <td class=''>9</td>
+            <td class=''>4</td>
+            <td class=''>7</td>
+            <td class=''>5</td>
+            <td class=''>6</td>
+            <td class=''>3</td>
+            <td class=''>12</td>
+            <td class=''>6</td>
+            <td class=''>6</td>
+            <td class=''>8</td>
+            <td class=''>5</td>
+            <td class=''>2</td>
+            <td class=''>4</td>
+            <td class=''>7</td>
+            <td class=''>7</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''>1</td>
+            <td class=''>8</td>
+            <td class=''>6</td>
+            <td class=''>4</td>
+            <td class=''>7</td>
+            <td class=''>6</td>
+            <td class=''>6</td>
+            <td class=''>3</td>
+            <td class=''>8</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>6</td>
+            <td class=''>6</td>
+            <td class=''></td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>0</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>6</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>0</td>
+            <td class=''>1</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+        </tr>
+        <tr class='curstat trbg '>
+            <td>平均遗漏值</td>
+            <td class='tdbdr'></td>
+            <td class=''>6</td>
+            <td class=''>2</td>
+            <td class=''>7</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>7</td>
+            <td class=''>2</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>3</td>
+            <td class=''>6</td>
+            <td class=''>5</td>
+            <td class=''>7</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>7</td>
+            <td class=''>9</td>
+            <td class=''>10</td>
+            <td class=''>3</td>
+            <td class=''>26</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''></td>
+            <td class=''>37</td>
+            <td class=''>37</td>
+            <td class=''>15</td>
+            <td class=''>0</td>
+            <td class=''>14</td>
+            <td class=''>10</td>
+            <td class=''>4</td>
+            <td class=''>18</td>
+            <td class=''>26</td>
+            <td class=''>26</td>
+            <td class=''>0</td>
+            <td class=''>22</td>
+            <td class=''>10</td>
+            <td class=''>13</td>
+            <td class=''>10</td>
+            <td class=''>18</td>
+        </tr>
+        <tr class='curstat '>
+            <td>最大遗漏值</td>
+            <td class='tdbdr'></td>
+            <td class=''>11</td>
+            <td class=''>8</td>
+            <td class=''>20</td>
+            <td class=''>11</td>
+            <td class=''>6</td>
+            <td class=''>6</td>
+            <td class=''>10</td>
+            <td class=''>16</td>
+            <td class=''>8</td>
+            <td class=''>19</td>
+            <td class=''>9</td>
+            <td class=''>12</td>
+            <td class=''>19</td>
+            <td class=''>11</td>
+            <td class=''>9</td>
+            <td class=''>11</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>10</td>
+            <td class=''>19</td>
+            <td class=''>15</td>
+            <td class=''>13</td>
+            <td class=''>26</td>
+            <td class=''>10</td>
+            <td class=''>8</td>
+            <td class=''>15</td>
+            <td class=''>9</td>
+            <td class=''>12</td>
+            <td class=''>11</td>
+            <td class=''>14</td>
+            <td class=''>16</td>
+            <td class=''>15</td>
+            <td class=''>18</td>
+            <td class=''>11</td>
+            <td class=''>7</td>
+            <td class=''></td>
+            <td class=''>37</td>
+            <td class=''>37</td>
+            <td class=''>25</td>
+            <td class=''>61</td>
+            <td class=''>21</td>
+            <td class=''>14</td>
+            <td class=''>12</td>
+            <td class=''>36</td>
+            <td class=''>49</td>
+            <td class=''>26</td>
+            <td class=''>77</td>
+            <td class=''>22</td>
+            <td class=''>17</td>
+            <td class=''>13</td>
+            <td class=''>14</td>
+            <td class=''>28</td>
+        </tr>
+        <tr class='curstat trbg '>
+            <td>最大连出值</td>
+            <td class='tdbdr'></td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>5</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>3</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''></td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>0</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>2</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>0</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+            <td class=''>1</td>
+        </tr>
+        <tr class='allstat none'>
+            <td>出现总次数</td>
+            <td class='tdbdr'></td>
+            <td class=' ft8' title='401'><em>401</em></td>
+            <td class=' ft8' title='377'><em>377</em></td>
+            <td class=' ft8' title='392'><em>392</em></td>
+            <td class=' ft8' title='372'><em>372</em></td>
+            <td class=' ft8' title='377'><em>377</em></td>
+            <td class=' ft8' title='374'><em>374</em></td>
+            <td class=' ft8' title='391'><em>391</em></td>
+            <td class=' ft8' title='396'><em>396</em></td>
+            <td class=' ft8' title='368'><em>368</em></td>
+            <td class=' ft8' title='372'><em>372</em></td>
+            <td class=' ft8' title='363'><em>363</em></td>
+            <td class=' ft8' title='376'><em>376</em></td>
+            <td class=' ft8' title='385'><em>385</em></td>
+            <td class=' ft8' title='399'><em>399</em></td>
+            <td class=' ft8' title='349'><em>349</em></td>
+            <td class=' ft8' title='378'><em>378</em></td>
+            <td class=' tdbdr_nav'></td>
+            <td class=' ft8' title='409'><em>409</em></td>
+            <td class=' ft8' title='395'><em>395</em></td>
+            <td class=' ft8' title='374'><em>374</em></td>
+            <td class=' ft8' title='399'><em>399</em></td>
+            <td class=' ft8' title='372'><em>372</em></td>
+            <td class=' ft8' title='401'><em>401</em></td>
+            <td class=' ft8' title='353'><em>353</em></td>
+            <td class=' ft8' title='341'><em>341</em></td>
+            <td class=' ft8' title='371'><em>371</em></td>
+            <td class=' ft8' title='410'><em>410</em></td>
+            <td class=' ft8' title='388'><em>388</em></td>
+            <td class=' ft8' title='358'><em>358</em></td>
+            <td class=' ft8' title='368'><em>368</em></td>
+            <td class=' ft8' title='384'><em>384</em></td>
+            <td class=' ft8' title='353'><em>353</em></td>
+            <td class=' ft8' title='403'><em>403</em></td>
+            <td class=' ft8' title='325'><em>325</em></td>
+            <td class=''></td>
+            <td class=' ft8' title='133'><em>133</em></td>
+            <td class=' ft8' title='119'><em>119</em></td>
+            <td class=' ft8' title='123'><em>123</em></td>
+            <td class=' ft8' title='116'><em>116</em></td>
+            <td class=' ft8' title='128'><em>128</em></td>
+            <td class=' ft8' title='127'><em>127</em></td>
+            <td class=' ft8' title='131'><em>131</em></td>
+            <td class=' ft8' title='116'><em>116</em></td>
+            <td class=' ft8' title='145'><em>145</em></td>
+            <td class=' ft8' title='125'><em>125</em></td>
+            <td class=' ft8' title='138'><em>138</em></td>
+            <td class=' ft8' title='142'><em>142</em></td>
+            <td class=' ft8' title='134'><em>134</em></td>
+            <td class=' ft8' title='136'><em>136</em></td>
+            <td class=' ft8' title='132'><em>132</em></td>
+            <td class=' ft8' title='134'><em>134</em></td>
+        </tr>
+        <tr class='allstat trbg none'>
+            <td>平均遗漏值</td>
+            <td class='tdbdr'></td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''></td>
+            <td class=''>15</td>
+            <td class=''>16</td>
+            <td class=''>16</td>
+            <td class=''>16</td>
+            <td class=''>15</td>
+            <td class=''>15</td>
+            <td class=''>15</td>
+            <td class=''>17</td>
+            <td class=''>13</td>
+            <td class=''>16</td>
+            <td class=''>14</td>
+            <td class=''>14</td>
+            <td class=''>14</td>
+            <td class=''>14</td>
+            <td class=''>15</td>
+            <td class=''>14</td>
+        </tr>
+        <tr class='allstat none'>
+            <td>最大遗漏值</td>
+            <td class='tdbdr'></td>
+            <td class=''>26</td>
+            <td class=''>26</td>
+            <td class=''>32</td>
+            <td class=''>45</td>
+            <td class=''>29</td>
+            <td class=''>28</td>
+            <td class=''>21</td>
+            <td class=''>34</td>
+            <td class=''>28</td>
+            <td class=''>40</td>
+            <td class=''>30</td>
+            <td class=''>26</td>
+            <td class=''>28</td>
+            <td class=''>33</td>
+            <td class=''>32</td>
+            <td class=''>34</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>26</td>
+            <td class=''>23</td>
+            <td class=''>27</td>
+            <td class=''>42</td>
+            <td class=''>33</td>
+            <td class=''>42</td>
+            <td class=''>24</td>
+            <td class=''>25</td>
+            <td class=''>40</td>
+            <td class=''>27</td>
+            <td class=''>26</td>
+            <td class=''>25</td>
+            <td class=''>29</td>
+            <td class=''>32</td>
+            <td class=''>31</td>
+            <td class=''>24</td>
+            <td class=''>36</td>
+            <td class=''></td>
+            <td class=''>67</td>
+            <td class=''>81</td>
+            <td class=''>77</td>
+            <td class=' ft8' title='112'><em>112</em></td>
+            <td class=' ft8' title='104'><em>104</em></td>
+            <td class=''>89</td>
+            <td class=''>90</td>
+            <td class=''>94</td>
+            <td class=''>94</td>
+            <td class=''>60</td>
+            <td class=''>77</td>
+            <td class=''>84</td>
+            <td class=''>84</td>
+            <td class=''>70</td>
+            <td class=''>83</td>
+            <td class=''>68</td>
+        </tr>
+        <tr class='allstat trbg none'>
+            <td>最大连出值</td>
+            <td class='tdbdr'></td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=' tdbdr_nav'></td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>5</td>
+            <td class=''>4</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>4</td>
+            <td class=''></td>
+            <td class=''>2</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>4</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>2</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>3</td>
+            <td class=''>2</td>
+        </tr>
+        </tfoot>
+    </table>
+    <div><label for="aa"><input id="aa" type="radio" value="1"/><input type="text" value="123"/></label></div>
+</div>
+    <div class="drawing-board-content">
+        <!--<svg height="516" version="1.1" width="979" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: 0px; top: 0px;" class="">-->
+            <!--<desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></desc>-->
+            <!--<defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>-->
+            <!--<path d="M250 150 L150 350 L350 350 Z" fill="none" stroke="#000000"></path>-->
+            <!--<path d="M250 150 A21.2132 42.4264 0 1 0 280 210A21.2132 42.4264  0 1 0 250 150" fill="none" stroke="#000000"></path>-->
+        <!--</svg>-->
+    </div>
+</body>
+
+<script type="text/javascript" src="js/ghw-svg-path.js"></script>
+<script type="text/javascript" src="js/drawing-board.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('[name="chart_args[]"]').chart_table();
+        $.ajax({
+            url:'./index.php',
+            success:function (d) {
+                console.log(d);
+            }
+        });
+        $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+            console.log(event,jqxhr,settings,thrownError);
+            console.log(jqxhr.status);
+        });
+    });
+</script>
+</html>
