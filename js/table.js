@@ -370,7 +370,14 @@
                 color: 'green',
                 width: 1
             },
-            ball_hf_width: 8
+            shape: {//形状参数
+                type: 'curve',
+                attr: {
+                    width: 8,
+                    height: 8
+                }
+            }
+            // ball_hf_width: 8
         },
         _hit: [],
         _data: [],
@@ -414,13 +421,69 @@
                 left: (left - this._rang_pos.start.left)
             }
         },
-        calculatePos: function (a, b) {
+        getCalculatePosFunc: function () {
+            var func = '_' + this.options.shape.type.toLowerCase() + 'CalculatePos';
+            return this[func];
+        },
+        /**
+         * 方形点连线
+         * @param a
+         * @param b
+         * @private
+         */
+        _squareCalculatePos: function (a, b) {
+            var pos1 = {},
+                pos2 = {},
+                x = Math.abs(a.left - b.left), //a,b横向距离
+                y = Math.abs(a.top - b.top),//a,b纵向距离
+                shape_attr = this.options.shape.attr;
+            if (a.left != b.left) {
+                var square_y = y * shape_attr.width / x;
+                if (square_y > shape_attr.height) {
+                    var square_x = shape_attr.width * (square_y - shape_attr.height) / square_y;
+                    pos1.y = a.top + shape_attr.height;
+                    pos2.y = b.top - shape_attr.height;
+                    if (a.left > b.left) {
+                        pos1.x = a.left - shape_attr.width + square_x;
+                        pos2.x = b.left + square_x;
+                    } else {
+                        pos1.x = a.left + shape_attr.width - square_x;
+                        pos2.x = b.left - square_x;
+                    }
+                } else {
+                    pos1.y = a.top + square_y;
+                    pos2.y = b.top - square_y;
+                    if (a.left > b.left) {
+                        pos1.x = a.left - shape_attr.width;
+                        pos2.x = b.left + shape_attr.width;
+                    } else {
+                        pos1.x = a.left + shape_attr.width;
+                        pos2.x = b.left - shape_attr.width;
+                    }
+                }
+            } else {
+                pos1.x = a.left;
+                pos1.y = a.top + shape_attr.height;
+                pos2.x = a.left;
+                pos2.y = b.top - shape_attr.height;
+            }
+            return [pos1, pos2];
+        },
+        /**
+         * 圆形点连线
+         * @param a
+         * @param b
+         * @returns {*[]}
+         * @private
+         */
+        _curveCalculatePos: function (a, b) {
             var pos1 = {},//连线坐标1
                 pos2 = {}, //连线坐标2
                 x = Math.abs(a.left - b.left), //a,b横向距离
-                y = Math.abs(a.top - b.top);//a,b纵向距离
+                y = Math.abs(a.top - b.top),//a,b纵向距离
+                hf_width = this.options.shape.attr.width;
             if (a.left != b.left) {//a,b不在同一列
-                var rate = this.options.ball_hf_width / Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                var rate = hf_width / Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
                 var x_rate = x * rate;
                 var y_rate = y * rate;
                 pos1.y = a.top + y_rate;
@@ -434,9 +497,9 @@
                 }
             } else {
                 pos1.x = a.left;
-                pos1.y = a.top + this.options.ball_hf_width;
+                pos1.y = a.top + hf_width;
                 pos2.x = a.left;
-                pos2.y = b.top - this.options.ball_hf_width;
+                pos2.y = b.top - hf_width;
             }
             return [pos1, pos2];
         },
@@ -450,12 +513,13 @@
                 core_pos.push(this.getCorePos(this._hit[i]));
             }
             i = 0;
+            var calculatePosFunc = this.getCalculatePosFunc();
             for (; i < core_pos.length - 1; i++) {
-                var tmp = this.calculatePos(core_pos[i], core_pos[i + 1]);
+                var tmp = calculatePosFunc.apply(this, [core_pos[i], core_pos[i + 1]]);
                 pos.push(tmp[0]);
                 pos.push(tmp[1]);
             }
-            console.log(pos);
+            // console.log(pos);
             var canvas_width = this._rang_pos.end.left - this._rang_pos.start.left,
                 canvas_height = this._rang_pos.end.top - this._rang_pos.start.top;
             var canvas = new $GW_CANVAS(canvas_width, canvas_height, this._rang_pos.start.top, this._rang_pos.start.left);

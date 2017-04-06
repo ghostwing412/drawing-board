@@ -50,7 +50,7 @@
             },
             cls: 'tdbg_r'
         },
-        nl: {//连线
+        nl: {
             elm: 'data-tab',
             mark: 'hit',
             rang: {
@@ -63,7 +63,13 @@
                 color: 'green',
                 width: 1
             },
-            ball_hf_width: 8
+            shape: {//形状参数
+                type: 'square',//curve|square 圆形或者矩形
+                attr: {//当时圆形时，此处以圆半径，只使用到width
+                    width: 8,//矩形宽的一半
+                    height: 18.5//矩形高的一半
+                }
+            }
         },
         drawing_board: {
             elm: 'data-tab',
